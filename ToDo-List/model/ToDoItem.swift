@@ -5,9 +5,7 @@
 //  Created by Mahmoud Fouad on 8/12/21.
 //
 
-import SwiftUI
-
-
+import Foundation
 
 class ToDoItem {
     
