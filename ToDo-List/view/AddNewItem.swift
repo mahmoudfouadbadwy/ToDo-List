@@ -9,11 +9,13 @@ import SwiftUI
 
 struct AddNewItem: View {
     @Environment(\.managedObjectContext) var context
+    @ObservedObject var keyboardHelper: KeyboardHeightHelper
     @Binding var isShow: Bool
     @State private var priority = ToDoItem.Priority.normal
     @State private  var name = ""
     @State private var isEditing = false
    
+    
     
     var body: some View {
         VStack {
@@ -109,7 +111,7 @@ struct AddNewItem: View {
             .padding()
             .background(Color.white)
             .cornerRadius(10, antialiased: true)
-            .offset(y: isEditing ? -320 : 0)
+            .offset(y: isEditing ? -self.keyboardHelper.keyboardHeight : 0)
         }
         .edgesIgnoringSafeArea(.bottom)
     }
@@ -131,6 +133,6 @@ struct AddNewItem: View {
 
 struct AddNewItem_Previews: PreviewProvider {
     static var previews: some View {
-        AddNewItem(isShow: .constant(true))
+        AddNewItem(keyboardHelper: KeyboardHeightHelper(), isShow: .constant(true))
     }
 }

@@ -43,7 +43,7 @@ struct HomeView: View {
                         self.showAddNewTask.toggle()
                     }
                 
-                AddNewItem(isShow: $showAddNewTask)
+                AddNewItem(keyboardHelper: KeyboardHeightHelper(), isShow: $showAddNewTask)
                     .transition(.move(edge: .bottom))
                     .animation(.interpolatingSpring(stiffness: 200.0, damping: 25.0, initialVelocity: 10.0))
             }
