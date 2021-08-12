@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct ToDoListRow: View {
-    @ObservedObject var todoItem: ToDoItem
+    @ObservedObject var todoItem: Item
     var body: some View {
         Toggle(isOn: self.$todoItem.isCompleted) {
             HStack {
-                Text(self.todoItem.name)
+                Text(self.todoItem.wrappedName)
                     .strikethrough(self.todoItem.isCompleted, color: .black)
                     .bold()
                     .animation(.default)
@@ -21,7 +21,7 @@ struct ToDoListRow: View {
                 
                 Circle()
                     .frame(width: 10, height: 10)
-                    .foregroundColor(self.color(for: self.todoItem.priority))
+                    .foregroundColor(self.color(for: self.todoItem.wrappedPriority))
             }
         }
         .toggleStyle(CheckBoxStyle())
@@ -37,8 +37,9 @@ struct ToDoListRow: View {
 }
 
 struct ToDoListRow_Previews: PreviewProvider {
+    @Environment(\.managedObjectContext) static var context
     static var previews: some View {
-        ToDoListRow(todoItem: ToDoItem(name: "test", priority: .low, isCompleted: false))
+        ToDoListRow(todoItem: Item(context: context))
     }
 }
 

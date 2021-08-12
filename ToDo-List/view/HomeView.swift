@@ -8,14 +8,14 @@
 import SwiftUI
 
 struct HomeView: View {
-    
-    @State private var items: [ToDoItem] = []
+
     @State private var showAddNewTask = false
+    @FetchRequest(entity: Item.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Item.priority, ascending: false)]) var items: FetchedResults<Item>
     
     var body: some View {
         ZStack {
             NavigationView {
-                ListView(items: $items)
+                ListView(items: items)
                 .navigationBarTitle("ToDo Items", displayMode: .large)
                 .navigationBarItems(trailing: Button(action: {
                     self.showAddNewTask.toggle()
@@ -41,7 +41,7 @@ struct HomeView: View {
                         self.showAddNewTask.toggle()
                     }
                 
-                AddNewItem(isShow: $showAddNewTask, items: $items)
+                AddNewItem(isShow: $showAddNewTask)
                     .transition(.move(edge: .bottom))
                     .animation(.interpolatingSpring(stiffness: 200.0, damping: 25.0, initialVelocity: 10.0))
             }

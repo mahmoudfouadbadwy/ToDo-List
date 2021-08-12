@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct AddNewItem: View {
-    
+    @Environment(\.managedObjectContext) var context
     @Binding var isShow: Bool
-    @Binding var items: [ToDoItem]
     @State private var priority = ToDoItem.Priority.normal
     @State private  var name = ""
     @State private var isEditing = false
@@ -116,14 +115,22 @@ struct AddNewItem: View {
     }
     
     private func addTask(name: String, priority: ToDoItem.Priority, isComplete: Bool = false) {
-        
-        let task = ToDoItem(name: name, priority: priority, isCompleted: isComplete)
-        items.append(task)
+        let task = Item(context: context)
+        task.id = UUID()
+        task.name = name
+        task.wrappedPriority = priority
+        task.isCompleted = isComplete
+
+        do {
+            try context.save()
+        } catch {
+            print(error)
+        }
     }
 }
 
 struct AddNewItem_Previews: PreviewProvider {
     static var previews: some View {
-        AddNewItem(isShow: .constant(true), items: .constant([]))
+        AddNewItem(isShow: .constant(true))
     }
 }

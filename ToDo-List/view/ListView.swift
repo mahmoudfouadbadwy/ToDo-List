@@ -8,10 +8,10 @@
 import SwiftUI
 
 struct ListView: View {
-    @Binding var items: [ToDoItem]
+    var items: FetchedResults<Item>?
     var body: some View {
         List {
-            ForEach(items) { item in
+            ForEach(items!) { item in
                 ToDoListRow(todoItem: item)
             }
         }
@@ -21,6 +21,6 @@ struct ListView: View {
 
 struct ListView_Previews: PreviewProvider {
     static var previews: some View {
-        ListView(items: .constant([]))
+        ListView()
     }
 }
