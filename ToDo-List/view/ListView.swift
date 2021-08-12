@@ -9,10 +9,22 @@ import SwiftUI
 
 struct ListView: View {
     @Environment(\.managedObjectContext) var context
-    var items: FetchedResults<Item>?
+    @State private var filter = false
+    var items: FetchedResults<Item>!
+    private var filterdItems: [Item] {
+        items.filter {
+            !filter || $0.isCompleted
+        }
+    }
     var body: some View {
         List {
-            ForEach(items!) { item in
+            if !items.isEmpty {
+                Toggle(isOn: $filter.animation(), label: {
+                    Text("Show Completed Only")
+                })
+            }
+            
+            ForEach(filterdItems) { item in
                 ToDoListRow(todoItem: item)
             }
             .onDelete(perform: deleteItem(indexSet:))
@@ -21,9 +33,6 @@ struct ListView: View {
     }
     
     private func deleteItem(indexSet: IndexSet) {
-        guard let items = items else {
-            return
-        }
         for index in indexSet {
             let item = items[index]
             context.delete(item)

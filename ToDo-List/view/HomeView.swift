@@ -8,10 +8,9 @@
 import SwiftUI
 
 struct HomeView: View {
-
+    
     @State private var showAddNewTask = false
     @FetchRequest(entity: Item.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Item.priority, ascending: false)]) var items: FetchedResults<Item>
-    
     var body: some View {
         ZStack {
             NavigationView {
@@ -31,7 +30,6 @@ struct HomeView: View {
             }
             .rotation3DEffect(Angle(degrees: showAddNewTask ? 5 : 0), axis: (x: 1, y: 0, z: 0))
             .animation(.easeOut)
-            
             if items.isEmpty {
                 EmptyView()
             }
