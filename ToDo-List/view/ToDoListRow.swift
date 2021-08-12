@@ -8,7 +8,10 @@
 import SwiftUI
 
 struct ToDoListRow: View {
+    
+    @Environment(\.managedObjectContext) var context
     @ObservedObject var todoItem: Item
+    
     var body: some View {
         Toggle(isOn: self.$todoItem.isCompleted) {
             HStack {
@@ -25,6 +28,15 @@ struct ToDoListRow: View {
             }
         }
         .toggleStyle(CheckBoxStyle())
+        .onReceive(todoItem.objectWillChange) { _ in
+            if context.hasChanges {
+                do {
+                   try self.context.save()
+                } catch {
+                    print(error)
+                }
+            }
+        }
     }
     
     private func color(for priority: ToDoItem.Priority) -> Color {
