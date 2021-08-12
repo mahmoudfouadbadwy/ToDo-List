@@ -16,16 +16,18 @@ struct HomeView: View {
         ZStack {
             NavigationView {
                 ListView(items: items)
-                .navigationBarTitle("ToDo Items", displayMode: .large)
-                .navigationBarItems(trailing: Button(action: {
-                    self.showAddNewTask.toggle()
-                },
-                label: {
-                    Image(systemName: "plus.circle.fill")
-                        .foregroundColor(.purple)
-                        .font(.largeTitle)
-                })
-                )
+                    .navigationBarTitle("ToDo Items", displayMode: .large)
+                    .navigationBarItems(leading: EditButton()
+                                            .disabled(items.isEmpty),
+                                        trailing: Button(action: {
+                                            self.showAddNewTask.toggle()
+                                        },
+                                        label: {
+                                            Image(systemName: "plus.circle.fill")
+                                                .foregroundColor(.purple)
+                                                .font(.largeTitle)
+                                        })
+                    )
             }
             .rotation3DEffect(Angle(degrees: showAddNewTask ? 5 : 0), axis: (x: 1, y: 0, z: 0))
             .animation(.easeOut)
