@@ -10,6 +10,8 @@ import SwiftUI
 struct HomeView: View {
     
     @State private var items: [String] = []
+    @State private var showAddNewTask = false
+    
     var body: some View {
         ZStack {
             NavigationView {
@@ -19,25 +21,33 @@ struct HomeView: View {
                     }
                     .navigationBarTitle("ToDo Items", displayMode: .large)
                     .navigationBarItems(trailing: Button(action: {
-                        
+                        self.showAddNewTask.toggle()
                     },
-                                                         label: {
-                                                            Image(systemName: "plus.circle.fill")
-                                                                .foregroundColor(.purple)
-                                                                .font(.largeTitle)
-                                                         })
+                    label: {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundColor(.purple)
+                            .font(.largeTitle)
+                    })
                     )
                 }
-                .onAppear {
-                    UITableView.appearance().separatorColor = .clear
-                }
+            }
+            .onAppear {
+                UITableView.appearance().separatorColor = .clear
             }
             
             if items.isEmpty {
                 EmptyView()
             }
             
+            if showAddNewTask {
+                BlankView(backgroundColor: .black)
+                    .opacity(0.5)
+                    .onTapGesture {
+                        self.showAddNewTask.toggle()
+                    }
+            }
         }
+        
     }
 }
 

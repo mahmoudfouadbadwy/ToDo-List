@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3BAF471A26C4A94B008D7CAE /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF471926C4A94B008D7CAE /* EmptyView.swift */; };
+		3BAF472226C4B05A008D7CAE /* BlankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BAF472126C4B05A008D7CAE /* BlankView.swift */; };
 		3BE1072926C4A0AF00452008 /* ToDo_ListApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BE1072826C4A0AF00452008 /* ToDo_ListApp.swift */; };
 		3BE1072D26C4A0B300452008 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BE1072C26C4A0B300452008 /* Assets.xcassets */; };
 		3BE1073026C4A0B300452008 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3BE1072F26C4A0B300452008 /* Preview Assets.xcassets */; };
@@ -18,6 +19,7 @@
 
 /* Begin PBXFileReference section */
 		3BAF471926C4A94B008D7CAE /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
+		3BAF472126C4B05A008D7CAE /* BlankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlankView.swift; sourceTree = "<group>"; };
 		3BE1072526C4A0AE00452008 /* ToDo-List.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ToDo-List.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3BE1072826C4A0AF00452008 /* ToDo_ListApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDo_ListApp.swift; sourceTree = "<group>"; };
 		3BE1072C26C4A0B300452008 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -82,6 +84,7 @@
 			children = (
 				3BE1073E26C4A15800452008 /* HomeView.swift */,
 				3BAF471926C4A94B008D7CAE /* EmptyView.swift */,
+				3BAF472126C4B05A008D7CAE /* BlankView.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -156,6 +159,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3BE1073226C4A0B300452008 /* Persistence.swift in Sources */,
+				3BAF472226C4B05A008D7CAE /* BlankView.swift in Sources */,
 				3BAF471A26C4A94B008D7CAE /* EmptyView.swift in Sources */,
 				3BE1073F26C4A15800452008 /* HomeView.swift in Sources */,
 				3BE1072926C4A0AF00452008 /* ToDo_ListApp.swift in Sources */,
