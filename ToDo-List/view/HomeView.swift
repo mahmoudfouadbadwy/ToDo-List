@@ -19,20 +19,18 @@ struct HomeView: View {
                     ForEach(items, id: \.self) { item in
                         Text(item)
                     }
-                    .navigationBarTitle("ToDo Items", displayMode: .large)
-                    .navigationBarItems(trailing: Button(action: {
-                        self.showAddNewTask.toggle()
-                    },
-                    label: {
-                        Image(systemName: "plus.circle.fill")
-                            .foregroundColor(.purple)
-                            .font(.largeTitle)
-                    })
-                    )
                 }
-            }
-            .onAppear {
-                UITableView.appearance().separatorColor = .clear
+                .navigationBarTitle("ToDo Items", displayMode: .large)
+                .navigationBarItems(trailing: Button(action: {
+                    self.showAddNewTask.toggle()
+                },
+                label: {
+                    Image(systemName: "plus.circle.fill")
+                        .foregroundColor(.purple)
+                        .font(.largeTitle)
+                })
+                )
+                .listSeparatorStyle(style: .none)
             }
             
             if items.isEmpty {
