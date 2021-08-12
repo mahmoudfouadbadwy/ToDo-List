@@ -9,17 +9,13 @@ import SwiftUI
 
 struct HomeView: View {
     
-    @State private var items: [String] = []
+    @State private var items: [ToDoItem] = []
     @State private var showAddNewTask = false
     
     var body: some View {
         ZStack {
             NavigationView {
-                List {
-                    ForEach(items, id: \.self) { item in
-                        Text(item)
-                    }
-                }
+                ListView(items: $items)
                 .navigationBarTitle("ToDo Items", displayMode: .large)
                 .navigationBarItems(trailing: Button(action: {
                     self.showAddNewTask.toggle()
@@ -30,8 +26,9 @@ struct HomeView: View {
                         .font(.largeTitle)
                 })
                 )
-                .listSeparatorStyle(style: .none)
             }
+            .rotation3DEffect(Angle(degrees: showAddNewTask ? 5 : 0), axis: (x: 1, y: 0, z: 0))
+            .animation(.easeOut)
             
             if items.isEmpty {
                 EmptyView()
@@ -43,6 +40,10 @@ struct HomeView: View {
                     .onTapGesture {
                         self.showAddNewTask.toggle()
                     }
+                
+                AddNewItem(isShow: $showAddNewTask, items: $items)
+                    .transition(.move(edge: .bottom))
+                    .animation(.interpolatingSpring(stiffness: 200.0, damping: 25.0, initialVelocity: 10.0))
             }
         }
         
