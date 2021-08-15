@@ -6,30 +6,71 @@
 //
 
 import SwiftUI
+import CoreData
 
 struct ListView: View {
+    
     @Environment(\.managedObjectContext) var context
     @State private var filter = false
-    var items: FetchedResults<Item>!
-    private var filterdItems: [Item] {
+    @Binding var showAddNewTask: Bool
+    @Binding var searchText: String
+    
+    private var fetchRequest: FetchRequest<Item>
+    private var items: FetchedResults<Item> {
+        fetchRequest.wrappedValue
+    }
+    private var filterdItemsByComplete: [Item] {
         items.filter {
             !filter || $0.isCompleted
         }
     }
+    
+    init(_ searchText: Binding<String>, _ showAddingTask: Binding<Bool>) {
+        self._searchText = searchText
+        self._showAddNewTask = showAddingTask
+        let predicate = searchText.wrappedValue.isEmpty ?
+            NSPredicate(value: true) :
+            NSPredicate(format: "name CONTAINS[c] %@", searchText.wrappedValue)
+        
+        self.fetchRequest = FetchRequest(entity: Item.entity(),
+                                         sortDescriptors: [ NSSortDescriptor(keyPath:
+                                                                                \Item.priority, ascending: false) ], predicate: predicate,
+                                         animation: .default)
+    }
+    
     var body: some View {
-        List {
-            if !items.isEmpty {
-                Toggle(isOn: $filter.animation(), label: {
-                    Text("Show Completed Only")
-                })
+        ZStack {
+            if items.isEmpty {
+                EmptyView()
             }
             
-            ForEach(filterdItems) { item in
-                ToDoListRow(todoItem: item)
+            List {
+                if !items.isEmpty {
+                    Toggle(isOn: $filter.animation(), label: {
+                        Text("Show Completed Only")
+                    })
+                }
+                
+                ForEach(filterdItemsByComplete) { item in
+                    ToDoListRow(todoItem: item)
+                }
+                .onDelete(perform: deleteItem(indexSet:))
             }
-            .onDelete(perform: deleteItem(indexSet:))
+            .listSeparatorStyle(style: .none)
+            .navigationBarTitle("ToDo Items", displayMode: .large)
+            .navigationBarItems(leading: EditButton()
+                                    .disabled(items.isEmpty),
+                                trailing: Button(action: {
+                                    self.showAddNewTask.toggle()
+                                },
+                                label: {
+                                    Image(systemName: "plus.circle.fill")
+                                        .foregroundColor(.purple)
+                                        .font(.largeTitle)
+                                })
+            )
+
         }
-        .listSeparatorStyle(style: .none)
     }
     
     private func deleteItem(indexSet: IndexSet) {
@@ -47,6 +88,6 @@ struct ListView: View {
 
 struct ListView_Previews: PreviewProvider {
     static var previews: some View {
-        ListView()
+        ListView(.constant(""), .constant(false))
     }
 }

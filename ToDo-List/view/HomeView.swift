@@ -10,29 +10,19 @@ import SwiftUI
 struct HomeView: View {
     
     @State private var showAddNewTask = false
-    @FetchRequest(entity: Item.entity(), sortDescriptors: [NSSortDescriptor(keyPath: \Item.priority, ascending: false)]) var items: FetchedResults<Item>
+    @State private var searchText = ""
+    
     var body: some View {
         ZStack {
             NavigationView {
-                ListView(items: items)
-                    .navigationBarTitle("ToDo Items", displayMode: .large)
-                    .navigationBarItems(leading: EditButton()
-                                            .disabled(items.isEmpty),
-                                        trailing: Button(action: {
-                                            self.showAddNewTask.toggle()
-                                        },
-                                        label: {
-                                            Image(systemName: "plus.circle.fill")
-                                                .foregroundColor(.purple)
-                                                .font(.largeTitle)
-                                        })
-                    )
+                VStack {
+                    SearchBar(text: $searchText)
+                    ListView($searchText, $showAddNewTask)
+                      
+                }
             }
             .rotation3DEffect(Angle(degrees: showAddNewTask ? 5 : 0), axis: (x: 1, y: 0, z: 0))
             .animation(.easeOut)
-            if items.isEmpty {
-                EmptyView()
-            }
             
             if showAddNewTask {
                 BlankView(backgroundColor: .black)
