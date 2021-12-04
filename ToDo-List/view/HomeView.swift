@@ -9,19 +9,26 @@ import SwiftUI
 
 struct HomeView: View {
     
+    //MARK: - Properties
     @State private var showAddNewTask = false
     @State private var searchText = ""
     
+    //MARK: - UI
     var body: some View {
         ZStack {
+            
             NavigationView {
                 VStack {
                     SearchBar(text: $searchText)
                     ListView($searchText, $showAddNewTask)
-                      
+                    
                 }
             }
-            .rotation3DEffect(Angle(degrees: showAddNewTask ? 5 : 0), axis: (x: 1, y: 0, z: 0))
+            .rotation3DEffect(
+                Angle(
+                    degrees: showAddNewTask ? 5 : 0),
+                axis: (x: 1, y: 0, z: 0)
+            )
             .animation(.easeOut)
             
             if showAddNewTask {
@@ -31,9 +38,15 @@ struct HomeView: View {
                         self.showAddNewTask.toggle()
                     }
                 
-                AddNewItem(keyboardHelper: KeyboardHeightHelper(), isShow: $showAddNewTask)
+                AddNewItem(
+                    keyboardHelper: KeyboardHeightHelper(),
+                    isShow: $showAddNewTask)
                     .transition(.move(edge: .bottom))
-                    .animation(.interpolatingSpring(stiffness: 200.0, damping: 25.0, initialVelocity: 10.0))
+                    .animation(.interpolatingSpring(
+                        stiffness: 200,
+                        damping: 25,
+                        initialVelocity: 10)
+                    )
             }
         }
         

@@ -13,8 +13,12 @@ struct BlankView: View {
         VStack {
             Spacer()
         }
-        .frame(minWidth: 0, maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/, minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/,
-               maxHeight: .infinity)
+        .frame(
+            minWidth: 0,
+            maxWidth: /*@START_MENU_TOKEN@*/.infinity/*@END_MENU_TOKEN@*/,
+            minHeight: /*@START_MENU_TOKEN@*/0/*@END_MENU_TOKEN@*/,
+            maxHeight: .infinity
+        )
         .background(backgroundColor)
         .edgesIgnoringSafeArea(.all)
     }

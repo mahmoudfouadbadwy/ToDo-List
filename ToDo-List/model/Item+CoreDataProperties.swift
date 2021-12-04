@@ -15,16 +15,6 @@ extension Item {
     @NSManaged public var name: String?
     @NSManaged public var priority: Int32
     @NSManaged public var isCompleted: Bool
-    
-    
-    public var wrappedID: UUID {
-        id ?? UUID()
-    }
-    
-    public var wrappedName: String {
-        name ?? "unknown name"
-    }
-    
 }
 
 extension Item : Identifiable {
@@ -35,5 +25,12 @@ extension Item : Identifiable {
         set {
             self.priority = Int32(newValue.rawValue)
         }
+    }
+    var wrappedID: UUID {
+        id ?? UUID()
+    }
+    
+    var wrappedName: String {
+        name ?? "unknown name"
     }
 }

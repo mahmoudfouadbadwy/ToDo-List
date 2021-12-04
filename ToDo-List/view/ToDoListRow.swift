@@ -24,7 +24,7 @@ struct ToDoListRow: View {
                 
                 Circle()
                     .frame(width: 10, height: 10)
-                    .foregroundColor(self.color(for: self.todoItem.wrappedPriority))
+                    .foregroundColor( self.todoItem.wrappedPriority.color)
             }
         }
         .toggleStyle(CheckBoxStyle())
@@ -36,14 +36,6 @@ struct ToDoListRow: View {
                     print(error)
                 }
             }
-        }
-    }
-    
-    private func color(for priority: ToDoItem.Priority) -> Color {
-        switch priority {
-        case .high: return .red
-        case .normal: return .orange
-        case .low: return .green
         }
     }
 }

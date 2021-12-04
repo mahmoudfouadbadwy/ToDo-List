@@ -54,35 +54,19 @@ struct AddNewItem: View {
                     .padding(.bottom)
                 
                 HStack {
-                    Text("High")
-                        .font(.system(.headline, design: .rounded))
-                        .padding(10)
-                        .background(priority == .high ? Color.red : Color(.systemGray4))
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                        .onTapGesture {
-                            self.priority = .high
-                        }
-                    
-                    Text("Normal")
-                        .font(.system(.headline, design: .rounded))
-                        .padding(10)
-                        .background(priority == .normal ? Color.orange : Color(.systemGray4))
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                        .onTapGesture {
-                            self.priority = .normal
-                        }
-                    
-                    Text("Low")
-                        .font(.system(.headline, design: .rounded))
-                        .padding(10)
-                        .background(priority == .low ? Color.green : Color(.systemGray4))
-                        .foregroundColor(.white)
-                        .cornerRadius(8)
-                        .onTapGesture {
-                            self.priority = .low
-                        }
+                    ForEach(ToDoItem.Priority.allCases, id: \.self) { priority in
+                        Text(priority.title)
+                            .font(.system(.headline, design: .rounded))
+                            .padding(10)
+                            .background(self.priority == priority ?
+                                        priority.color : Color.gray)
+                            .foregroundColor(.white)
+                            .cornerRadius(8)
+                            .onTapGesture {
+                                self.priority = priority
+                                
+                            }
+                    }
                 }
                 .padding(.bottom, 30)
                 
@@ -122,7 +106,6 @@ struct AddNewItem: View {
         task.name = name
         task.wrappedPriority = priority
         task.isCompleted = isComplete
-
         do {
             try context.save()
         } catch {

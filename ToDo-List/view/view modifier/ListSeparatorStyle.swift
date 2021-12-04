@@ -14,7 +14,9 @@ struct ListSeparatorStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
             .onAppear() {
-                UITableView.appearance().separatorStyle = self.style
+                UITableView
+                    .appearance()
+                    .separatorStyle = self.style
             }
     }
 }
